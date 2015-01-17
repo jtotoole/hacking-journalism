@@ -24,7 +24,7 @@ module HackingJournalism
       allow do
         origins '*'
         # location of your API
-        resource '/get_comments/*', :headers => :any, :methods => [:get, :options,]
+        resource '/get_comments.json/*', :headers => :any, :methods => [:get, :options,]
       end
     end
   end

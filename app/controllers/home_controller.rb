@@ -9,10 +9,7 @@ class HomeController < ApplicationController
   end
 
   def get_comments
-    @comments = Comment.all
-    respond_to do |format|
-      format.json { render "get_comment.json"}
-    end
+    render json: Comment.all, callback: params[:callback]
   end
 
   def delete_comment

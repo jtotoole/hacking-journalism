@@ -4,7 +4,7 @@ class CommentController < ApplicationController
   def submit
     unless missing_param?
       Comment.create!(
-        text:       params[:text],
+        text:       params[:text] || nil,
         position_x: params[:position_x],
         position_y: params[:position_y],
         time:       params[:time],
@@ -31,7 +31,7 @@ class CommentController < ApplicationController
 
   private
   def missing_param?
-    no_param?(params[:time]) || no_param?(params[:position_x]) || no_param?(params[:position_y]) || no_param?(params[:user])
+    no_param?(params[:kind]) || no_param?(params[:time]) || no_param?(params[:position_x]) || no_param?(params[:position_y]) || no_param?(params[:user])
   end
 
   def no_param?(param)

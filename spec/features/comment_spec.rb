@@ -18,7 +18,7 @@ describe "comment api", type: :feature do
 
   it "submits comments" do
     expect(Comment.count).to eq(1)
-    visit "/submit_comment?text=test2&position_x=xpos2&position_y=ypos2&user=miles2&time=12:31"
+    visit "/submit_comment?position_x=xpos2&position_y=ypos2&user=miles2&time=12:31&kind=mykind"
     expect(Comment.count).to eq(2)
   end
 
@@ -29,7 +29,6 @@ describe "comment api", type: :feature do
     [
       {
         "id"=>Comment.first.id,
-        "text"=>"my text",
         "time"=>"12:30",
         "position_x"=>"xpos",
         "position_y"=>"ypos",

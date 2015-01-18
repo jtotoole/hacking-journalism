@@ -161,10 +161,11 @@ $(document).ready(function() {
 					comments[i].visible = true;
 
 					if(comments[i].kind == "text") {
-						var el = $("<div class='text-comment'>" + comments[i].user + ": " + comments[i].text + "</div>");
 						var video = $("#myvideo_html5_api");
-						
 						var video_position = video.position();
+					        var el = $("<div class='text-comment text-left'><p class='kicker text-small'>" + comments[i].user + "</p><p>" + comments[i].text + "</p></div>");
+        
+					        var video_position = video.position();
 
 						var video_height = video.height();
 						var video_width  = video.width();
@@ -210,7 +211,7 @@ $(document).ready(function() {
 				text_box = $inputWrapper.find('#text_box');
 
 			play_time = myPlayer.currentTime();
-				
+
 
 			$inputWrapper.css({
 				top: e.clientY + 'px',
@@ -257,7 +258,9 @@ $(document).ready(function() {
 				}
 
 
-				$(this).hide();
+        // $(this).hide();
+        //hide input options
+        $("#input-options").hide();
 				$(this).val("");
 
 				$.get("https://mst4k.herokuapp.com/submit_comment", {
@@ -268,7 +271,7 @@ $(document).ready(function() {
 					position_x: position_percentages.left,
 					position_y: position_percentages.top
 				});
-				
+
 				myPlayer.play();
 
 			}else {

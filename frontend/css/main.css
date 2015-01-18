@@ -342,3 +342,14 @@ html, body {
         page-break-after: avoid;
     }
 }
+
+
+#main-canvas{
+    position:relative;
+    /*outline:2px solid blue;*/
+    height:100%;
+    width:100%;
+    z-index: 0;
+    /*background:pink;*/
+
+}

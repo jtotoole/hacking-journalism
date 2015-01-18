@@ -3,6 +3,8 @@ var TEXT_MAX = 40;
 
 comments = [];
 
+var player = {};
+
 function load_initial_comments() {
 	$.ajax({
 	  dataType: "json",
@@ -27,14 +29,62 @@ load_initial_comments();
 	}
 ];*/
 
+function createCommentMarker(time, data, duration, controlsElement){
+	// time and duration in seconds
+	var commentLeft =  time / duration * 100;
+	var containerWidth = controlsElement.width();
+	var boxLeft = ((time/duration * containerWidth) - 18) / containerWidth * 100;
+
+	// create marker
+	// shouldn't write html in jquery but whatever
+	var markerHtml = '<div id="' + data.id + '" class="comment-marker" style="left: ' + commentLeft + '%;"></div>';
+	var boxHtml = '<div data-comment-id="' + data.id + '" class="comment-marker-box text-left" style="left: ' + boxLeft + '%;"><p class="text-small kicker text-uppercase">' + data.user + '</p><p>' + data.text + '</p></div>';
+	controlsElement.append(markerHtml);
+	controlsElement.append(boxHtml);
+
+	// store data associated to marker in the marker itself
+	var $marker = $('.comment-marker#' + data.id);
+	var $box = $('.comment-marker-box[data-comment-id="' + data.id + '"]');
+	$marker.data(data);
+
+	$marker.on('mouseover', function(){
+		$box.addClass('comment-marker-box-visible');
+	}).on('mouseout', function(){
+		$box.removeClass('comment-marker-box-visible');
+	}).on('click', function(){
+		player.video.currentTime(data.time.toString());
+	});
+}
+
+function addEventListeners(){
+	var $inputOpts = $('.input-options-buttons');
+	$inputOpts.on('click', 'li', function(){
+		input_type = $(this).attr('data-type');
+		console.log('clicked: ', input_type);
+		if(input_type=='draw'){
+			startDrawing(); //THIS IS IN THE drawing.js FILE IN FRONTEND
+		}
+	});
+}
+
 $(document).ready(function() {
+	addEventListeners();
+
 	videojs("myvideo").ready(function(){
+		player.video = this;
 		var myPlayer = this;
 		var play_time = 0;
 
 		var user_name = "James";
 		//var user_name = window.prompt("Please enter your name.");
 
+		myPlayer.on('loadedmetadata', function(){
+			 player.duration = myPlayer.duration();
+
+			$.each(comments, function(index, comment){
+				createCommentMarker(comment.time, comment, player.duration, $('.vjs-progress-control'));
+			});
+		});
 
 		myPlayer.on("timeupdate", function (){
 			var currentTime = myPlayer.currentTime();
@@ -46,7 +96,7 @@ $(document).ready(function() {
 				if(currentTime >= commentTime && currentTime <= commentTime  + COMMENT_TIME_ON_SCREEN_SECONDS && comments[i].visible != true) {
 					comments[i].visible = true;
 
-					var el = $("<div class='text-comment text-left'>" + comments[i].user + ": " + comments[i].text + "</div>");
+					var el = $("<div class='text-comment text-left'><p class='kicker text-small'>" + comments[i].user + "</p><p>" + comments[i].text + "</p></div>");
 					var video = $("#myvideo_html5_api");
 					
 					var video_position = video.position();
@@ -78,17 +128,18 @@ $(document).ready(function() {
 
 		$("#myvideo_html5_api").click(function(e) {
 			console.log("Video clicked", e);
-			var text_box = $("#text_box");
+			var $inputWrapper = $("#input-options"),
+				text_box = $inputWrapper.find('#text_box');
 
 			play_time = myPlayer.currentTime();
 				
 
-			text_box.css({
+			$inputWrapper.css({
 				top: e.clientY + 'px',
 				left: e.clientX + 'px'
 			});
 
-			text_box.show();
+			$inputWrapper.show();
 			text_box.val("");
 			text_box.focus();
 

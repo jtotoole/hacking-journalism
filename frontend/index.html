@@ -17,6 +17,7 @@
         <link href="//vjs.zencdn.net/4.11/video-js.css" rel="stylesheet">
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
         <link rel="stylesheet" href="//assets.ziggeo.com/css/ziggeo-betajs-player.min.css" />
+        <script type="text/javascript" src="js/paperjs-v0.9.21/dist/paper-full.min.js"></script>
 
     </head>
     <body>
@@ -28,6 +29,9 @@
         	data-setup='{}'>
        		<source src='/videos/nakedandafraid.mp4' type='video/mp4'>
       	</video>
+        <canvas id="main-canvas">
+
+        </canvas>
       	<input type="text" id="text_box" placeholder="What do you think?">
         <button id="record_button">Record a video comment</button>
         <button id="close_recorder">Close recorder window</button>

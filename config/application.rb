@@ -23,7 +23,7 @@ module HackingJournalism
     config.middleware.use Rack::Cors do
       allow do
         origins '*'
-        resource '/*', :headers => :any, :methods => [:get, :options]
+        resource '/*', :headers => :any, :methods => [:get, :options, :post]
       end
     end
   end

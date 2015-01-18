@@ -5,7 +5,6 @@ class CommentController < ApplicationController
     unless missing_param?
       Comment.create!(text: params[:text], position_x: params[:position_x], position_y: params[:position_y], time: params[:time])
     end
-    success_redirect
   end
 
   def get
@@ -16,7 +15,6 @@ class CommentController < ApplicationController
     unless no_param?(params[:id])
       Comment.find(params[:id]).destroy
     end
-    success_redirect
   end
 
 

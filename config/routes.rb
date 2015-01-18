@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  get "/submit_comment", to: "home#submit_comment"
-  get "/get_comments", to: "home#get_comments", as: "get_comments"
-  get "/delete_comment", to: "home#delete_comment"
+  get "/submit_comment", to: "comment#submit"
+  get "/get_comments", to: "comment#get", as: "get_comments"
+  get "/delete_comment", to: "comment#delete"
+
+  get "/", to: "home#index"
 end

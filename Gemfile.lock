@@ -76,6 +76,8 @@ GEM
       factory_girl (~> 4.5.0)
       railties (>= 3.0.0)
     ffi (1.9.6)
+    font-awesome-rails (4.2.0.0)
+      railties (>= 3.2, < 5.0)
     git-pairing (0.5.3)
       awesome_print (>= 1.1.0)
       highline (>= 1.6.15)
@@ -249,6 +251,7 @@ DEPENDENCIES
   excon (< 0.39.0)
   factory_girl_rails
   ffaker!
+  font-awesome-rails
   git-pairing
   haml-rails
   htmlentities

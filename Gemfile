@@ -47,6 +47,8 @@ gem 'nokogiri'
 # for converting urls to safe
 gem 'htmlentities'
 
+gem 'font-awesome-rails'
+
 # gem "devise"
 # gem 'activeadmin', github: 'gregbell/active_admin'
 

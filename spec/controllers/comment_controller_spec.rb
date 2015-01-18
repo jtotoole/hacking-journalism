@@ -3,6 +3,7 @@ require 'spec_helper'
 describe CommentController, type: :controller do
 
   before do
+    Comment.delete_all
     Comment.create(text: "my text")
   end
 
@@ -12,7 +13,7 @@ describe CommentController, type: :controller do
   end
 
   it "renders comment submit template (success)" do
-    get :submit, position_x: "123", position_y: "123", user: "miles", time: "time"
+    get :submit, position_x: "123", position_y: "123", user: "miles", time: "time", kind: "mykind"
     expect(response).to render_template("comment/submit")
   end
 

@@ -4,6 +4,7 @@ require 'rest-client'
 describe "comment api", type: :feature do
 
   before do
+    Comment.delete_all
     Comment.create!(
       text: "my text",
       position_x: "xpos",
@@ -25,19 +26,7 @@ describe "comment api", type: :feature do
   it "gets comments" do
     visit "/get_comments"
     parsed_response = JSON.parse(page.body)
-    expect(parsed_response).to eq(
-    [
-      {
-        "id"=>Comment.first.id,
-        "time"=>"12:30",
-        "position_x"=>"xpos",
-        "position_y"=>"ypos",
-        "created_at"=>"2015-01-18T03:50:39.597Z",
-        "updated_at"=>"2015-01-18T03:50:39.597Z",
-        "user"=>"miles",
-        "kind"=>"mykind"
-      }
-    ])
+    expect(parsed_response).to eq([{"id"=>Comment.first.id, "text"=>"my text", "time"=>"12:30", "position_x"=>"xpos", "position_y"=>"ypos", "created_at"=>"2015-01-18T03:50:39.597Z", "updated_at"=>"2015-01-18T03:50:39.597Z", "user"=>"miles", "kind"=>"mykind"}])
   end
 
   it "deletes all comments" do

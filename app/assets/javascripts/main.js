@@ -64,6 +64,13 @@ function addEventListeners(){
 		if(input_type=='draw'){
 			startDrawing(); //THIS IS IN THE drawing.js FILE IN FRONTEND
 		}
+    else if(input_type == 'camera') {
+      $("#recorder").show();
+			$("#recorder").css({width: "320px", height: "240px"});
+			$("#close_recorder").show();
+			$(this).hide();
+			myPlayer.pause();
+    }
 	});
 }
 
@@ -78,12 +85,57 @@ $(document).ready(function() {
 		var user_name = "James";
 		//var user_name = window.prompt("Please enter your name.");
 
+		recorder = ZiggeoApi.Embed.embed("#recorder", {width: "320", height: "240", countdown: 0 });
+
 		myPlayer.on('loadedmetadata', function(){
 			 player.duration = myPlayer.duration();
 
 			$.each(comments, function(index, comment){
 				createCommentMarker(comment.time, comment, player.duration, $('.vjs-progress-control'));
 			});
+		});
+    
+    ZiggeoApi.Events.on("submitted", function(data) {
+			console.log(data);
+
+			$("#recorder").hide();
+
+			recorder.reset();
+
+			var position_percentages = {
+				left: 0,
+				top: 0
+			};
+
+			var play_time = myPlayer.currentTime();
+
+			$.get("//mst4k.herokuapp.com/submit_comment", {
+				auth: "hackingyovids",
+				time: play_time,
+				text: data.video.token,
+				user: user_name,
+				position_x: position_percentages.left,
+				position_y: position_percentages.top,
+				kind: "video"
+			});
+
+			$("#close_recorder").hide();
+		});
+
+		ZiggeoApi.Events.on("stop", function (data) {
+			$("#"+data.video.token).remove();
+
+			if(OVERLAY_VIDEOS == false ) {
+				myPlayer.play();
+			}
+		});
+    
+    $("#close_recorder").click(function(e){
+				$("#close_recorder").hide();
+				$("#recorder").hide();
+				$("#record_button").show();
+
+				myPlayer.play();
 		});
 
 		myPlayer.on("timeupdate", function (){
@@ -93,35 +145,61 @@ $(document).ready(function() {
 
 				var commentTime = parseFloat(comments[i].time);
 
+				if(currentTime >= commentTime - 1.5 && currentTime <= commentTime && comments[i].preloaded != true) {
+					if(comments[i].kind == "video") {
+						el = $("<div class='player' id='" + comments[i].text + "''></div>");
+						$("body").append(el);
+						player = ZiggeoApi.Embed.embed("#" + comments[i].text, { width: 320, height: 240, video: comments[i].text });
+						comments[i].element = el;
+						comments[i].player = player;
+						comments[i].preloaded = true;
+
+					}
+				}
+
 				if(currentTime >= commentTime && currentTime <= commentTime  + COMMENT_TIME_ON_SCREEN_SECONDS && comments[i].visible != true) {
 					comments[i].visible = true;
 
-					var el = $("<div class='text-comment text-left'><p class='kicker text-small'>" + comments[i].user + "</p><p>" + comments[i].text + "</p></div>");
-					var video = $("#myvideo_html5_api");
-					
-					var video_position = video.position();
+					if(comments[i].kind == "text") {
+						var el = $("<div class='text-comment'>" + comments[i].user + ": " + comments[i].text + "</div>");
+						var video = $("#myvideo_html5_api");
+						
+						var video_position = video.position();
 
-					var video_height = video.height();
-					var video_width  = video.width();
+						var video_height = video.height();
+						var video_width  = video.width();
 
 
-					var comment_left = parseFloat(comments[i].position_x) * video_width+video_position.left;
-					var comment_top  = parseFloat(comments[i].position_y) * video_height + video_position.top;
+						var comment_left = parseFloat(comments[i].position_x) * video_width+video_position.left;
+						var comment_top  = parseFloat(comments[i].position_y) * video_height + video_position.top;
 
-					el.css({
-						top: comment_top,
-						left: comment_left
-					});
+						el.css({
+							top: comment_top,
+							left: comment_left
+						});
 
-					$("body").append(el);
+						$("body").append(el);
 
-					comments[i].element = el;
+						comments[i].element = el;
+					}
+					else if(comments[i].kind == "video") {
+						if(comments[i].preloaded == true) {
+							comments[i].element.css({ visibility: 'visible' });
+							comments[i].player.play();
+
+							if(OVERLAY_VIDEOS == false) {
+								myPlayer.pause();
+							}
+						}
+					}
 				}
 
-
 				if(comments[i].visible == true && (currentTime <= commentTime || currentTime >= commentTime  + COMMENT_TIME_ON_SCREEN_SECONDS)) {
-					comments[i].element.remove();
-					comments[i].visible = false;
+					if(comments[i].kind == "text") {
+						comments[i].element.remove();
+
+						comments[i].visible = false;
+					}
 				}
 			}
 		});
@@ -200,6 +278,4 @@ $(document).ready(function() {
 			}
 		});
 	});
-
-	
 });

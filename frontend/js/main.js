@@ -40,8 +40,8 @@ $(document).ready(function() {
 
 		recorder = ZiggeoApi.Embed.embed("#recorder", {width: "320", height: "240", countdown: 0 });
 
-		var user_name = "James";
-		//var user_name = window.prompt("Please enter your name.");
+		//var user_name = "James";
+		var user_name = window.prompt("Please enter your name.");
 
 		ZiggeoApi.Events.on("submitted", function(data) {
 			console.log(data);

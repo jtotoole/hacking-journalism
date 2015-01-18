@@ -3,6 +3,8 @@ var TEXT_MAX = 40;
 
 comments = [];
 
+var player = {};
+
 function load_initial_comments() {
 	$.ajax({
 	  dataType: "json",
@@ -27,14 +29,44 @@ load_initial_comments();
 	}
 ];*/
 
+function createCommentMarker(time, data, duration, controlsElement){
+	// time and duration in seconds
+	var percentFromLeft =  time / duration * 100;
+
+	// create marker
+	// shouldn't write html in jquery but whatever
+	var markerHtml = '<div id="' + data.id + '" class="comment-marker" style="left: ' + percentFromLeft + '%;"><div data-comment-id="' + data.id + '" class="comment-marker-box text-left" style="left: ' + percentFromLeft + '%;">' + data.text + '</div></div>';
+	controlsElement.append(markerHtml);
+
+	// store data associated to marker in the marker itself
+	var $marker = $('.comment-marker#' + data.id)
+	$marker.data(data);
+
+	$marker.on('mouseover', function(){
+		$marker.find('.comment-marker-box').addClass('comment-marker-box-visible');
+	}).on('mouseout', function(){
+		$marker.find('.comment-marker-box').removeClass('comment-marker-box-visible');
+	}).on('click', function(){
+		player.video.currentTime(data.time.toString());
+	});
+}
+
 $(document).ready(function() {
 	videojs("myvideo").ready(function(){
+		player.video = this;
 		var myPlayer = this;
 		var play_time = 0;
 
 		var user_name = "James";
 		//var user_name = window.prompt("Please enter your name.");
 
+		myPlayer.on('loadedmetadata', function(){
+			 player.duration = myPlayer.duration();
+
+			$.each(comments, function(index, comment){
+				createCommentMarker(comment.time, comment, player.duration, $('.vjs-progress-control'));
+			});
+		});
 
 		myPlayer.on("timeupdate", function (){
 			var currentTime = myPlayer.currentTime();

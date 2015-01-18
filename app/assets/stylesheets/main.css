@@ -121,12 +121,52 @@ html, body {
     padding: 10px;
 }
 
+.comment-marker {
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: tomato;
+    top: 0;
+    cursor: pointer;
+    z-index: 1;
+    -webkit-transition: all .4s;
+    -moz-transition: all .4s;
+    -o-transition: all .4s;
+    transition: all .4s;
+}
+.vjs-default-skin:hover .comment-marker {
+    width: 10px;
+    height: 10px;
+}
+.comment-marker:hover {
+    background-color: papayawhip;
+    z-index: 2;
+}
+.comment-marker-box {
+    display: none;
+    position: absolute;
+    bottom: 20px;
+    max-width: 200px;
+    padding: 10px;
+    font-size: 14px;
+    background: white;
+    color: black;    
+}
+.comment-marker-box-visible {
+    display: block;
+}
 
+/* VIDEO CONTROLS */
 
-
-
-
-
+.vjs-progress-control {
+    position: relative;
+}
+.vjs-default-skin .vjs-control-bar {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
 
 
 /* ==========================================================================

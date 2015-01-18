@@ -6,8 +6,13 @@ describe CommentController, type: :controller do
     Comment.create(text: "my text")
   end
 
-  it "renders simple trends in xml" do
-    get :delete, id: "1"
-    expect(response).to render_template("delete.html")
+  it "renders comment delete view (success)" do
+    get :delete, id: Comment.first.id
+    expect(response).to render_template("comment/delete")
   end
+
+  # it "renders comment submit view (success)" do
+  #   get :submit, text: "my text", position_x:
+  #   expect(response).to render_template("comment/delete")
+  # end
 end

@@ -100,33 +100,41 @@ textarea {
 html, body {
     height: 100%;
 }
+body p {
+    margin: 0;
+}
 .text-center { text-align: center; }
 .text-left { text-align: left; }
+.text-small {
+    font-size: 0.75em;
+}
+.text-uppercase { text-transform: uppercase; }
 
 .block-center {
     margin-left: auto;
     margin-right: auto;
 }
+
 #text_box {
     position: absolute;
     left: 0px;
     top: 0px;
     display: none
 }
-
-
 .text-comment {
     position: absolute;
     background: rgba(255, 255, 255, 0.5);
     padding: 10px;
 }
 
+.kicker {
+    color: #FFA700;
+}
 .comment-marker {
     position: absolute;
     width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    background: tomato;
+    height: 100%;
+    background: #FFD700;
     top: 0;
     cursor: pointer;
     z-index: 1;
@@ -135,26 +143,32 @@ html, body {
     -o-transition: all .4s;
     transition: all .4s;
 }
-.vjs-default-skin:hover .comment-marker {
-    width: 10px;
-    height: 10px;
-}
 .comment-marker:hover {
-    background-color: papayawhip;
+    background-color: #FFA700;
     z-index: 2;
 }
 .comment-marker-box {
     display: none;
     position: absolute;
-    bottom: 20px;
+    bottom: 25px;
     max-width: 200px;
     padding: 10px;
     font-size: 14px;
     background: white;
-    color: black;    
+    color: black;
 }
 .comment-marker-box-visible {
     display: block;
+}
+.comment-marker-box:after {
+    content: '';
+    width: 0; 
+    height: 0; 
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;    
+    border-top: 10px solid white;
+    position: absolute;
+    bottom: -10px;
 }
 
 /* VIDEO CONTROLS */

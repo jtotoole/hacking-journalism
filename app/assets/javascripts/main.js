@@ -31,21 +31,26 @@ load_initial_comments();
 
 function createCommentMarker(time, data, duration, controlsElement){
 	// time and duration in seconds
-	var percentFromLeft =  time / duration * 100;
+	var commentLeft =  time / duration * 100;
+	var containerWidth = controlsElement.width();
+	var boxLeft = ((time/duration * containerWidth) - 18) / containerWidth * 100;
 
 	// create marker
 	// shouldn't write html in jquery but whatever
-	var markerHtml = '<div id="' + data.id + '" class="comment-marker" style="left: ' + percentFromLeft + '%;"><div data-comment-id="' + data.id + '" class="comment-marker-box text-left" style="left: ' + percentFromLeft + '%;">' + data.text + '</div></div>';
+	var markerHtml = '<div id="' + data.id + '" class="comment-marker" style="left: ' + commentLeft + '%;"></div>';
+	var boxHtml = '<div data-comment-id="' + data.id + '" class="comment-marker-box text-left" style="left: ' + boxLeft + '%;"><p class="text-small kicker text-uppercase">' + data.user + '</p><p>' + data.text + '</p></div>';
 	controlsElement.append(markerHtml);
+	controlsElement.append(boxHtml);
 
 	// store data associated to marker in the marker itself
-	var $marker = $('.comment-marker#' + data.id)
+	var $marker = $('.comment-marker#' + data.id);
+	var $box = $('.comment-marker-box[data-comment-id="' + data.id + '"]');
 	$marker.data(data);
 
 	$marker.on('mouseover', function(){
-		$marker.find('.comment-marker-box').addClass('comment-marker-box-visible');
+		$box.addClass('comment-marker-box-visible');
 	}).on('mouseout', function(){
-		$marker.find('.comment-marker-box').removeClass('comment-marker-box-visible');
+		$box.removeClass('comment-marker-box-visible');
 	}).on('click', function(){
 		player.video.currentTime(data.time.toString());
 	});
@@ -78,7 +83,7 @@ $(document).ready(function() {
 				if(currentTime >= commentTime && currentTime <= commentTime  + COMMENT_TIME_ON_SCREEN_SECONDS && comments[i].visible != true) {
 					comments[i].visible = true;
 
-					var el = $("<div class='text-comment text-left'>" + comments[i].user + ": " + comments[i].text + "</div>");
+					var el = $("<div class='text-comment text-left'><p class='kicker text-small'>" + comments[i].user + "</p><p>" + comments[i].text + "</p></div>");
 					var video = $("#myvideo_html5_api");
 					
 					var video_position = video.position();

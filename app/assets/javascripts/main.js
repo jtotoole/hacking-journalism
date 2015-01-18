@@ -1,6 +1,8 @@
 var COMMENT_TIME_ON_SCREEN_SECONDS = 2;
 var TEXT_MAX = 40;
 
+ZiggeoApi.token = "f98b6bd1fb6223951a4f344be3ad5753";
+
 comments = [];
 
 var player = {};

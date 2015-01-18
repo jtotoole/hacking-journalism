@@ -80,14 +80,13 @@ $(document).ready(function() {
 	addEventListeners();
 
 	videojs("myvideo").ready(function(){
-		player.video = this;
 		var myPlayer = this;
 		var play_time = 0;
 
 		var user_name = "James";
 		//var user_name = window.prompt("Please enter your name.");
 
-		recorder = ZiggeoApi.Embed.embed("#recorder", {width: "320", height: "240", countdown: 0 });
+		recorder = ZiggeoApi.Embed.embed("#recorder", { width: "320", height: "240", countdown: 0 });
 
 		myPlayer.on('loadedmetadata', function(){
 			 player.duration = myPlayer.duration();

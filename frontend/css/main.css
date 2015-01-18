@@ -116,10 +116,39 @@ html, body {
     padding: 10px;
 }
 
+#record_button {
+    position: fixed;
+    background-color: red;
+    border: 2px solid green;
+    border-radius: 5px;
+    right: 0px;
+    bottom: 0px;
+}
 
+#recorder {
+    position: fixed;
+    right: 0px;
+    display: none;
+    bottom: 30px;
+}
 
+#close_recorder {
+    display: none;
+    position: fixed;
+    background-color: yellow;
+    border: 2px solid green;
+    border-radius: 5px;
+    right: 0px;
+    bottom: 0px;
+    z-index: 1000;
+}
 
-
+.player {
+    visibility: hidden;
+    position: fixed;
+    left: 0px;
+    bottom: 0px;
+}
 
 
 

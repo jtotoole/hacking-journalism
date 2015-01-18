@@ -14,7 +14,10 @@
 
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
+        <link href="//vjs.zencdn.net/4.11/video-js.css" rel="stylesheet">
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
+        <link rel="stylesheet" href="//assets.ziggeo.com/css/ziggeo-betajs-player.min.css" />
+
     </head>
     <body>
         <!--[if lt IE 7]>
@@ -26,12 +29,24 @@
        		<source src='/videos/nakedandafraid.mp4' type='video/mp4'>
       	</video>
       	<input type="text" id="text_box" placeholder="What do you think?">
+        <button id="record_button">Record a video comment</button>
+        <button id="close_recorder">Close recorder window</button>
+      	
+      	<ziggeo ziggeo-width="320" ziggeo-height="240" id="recorder" class='inset-video'>
+		</ziggeo>
+        
+
+        <ziggeo id="player" class='inset-video' 
+        ziggeo-width=320
+        ziggeo-height=240>
+        </ziggeo>
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.min.js"><\/script>')</script>
         <script src="js/plugins.js"></script>
-        <link href="//vjs.zencdn.net/4.11/video-js.css" rel="stylesheet">
 		<script src="//vjs.zencdn.net/4.11/video.js"></script>
+		<script src="//assets.ziggeo.com/js/ziggeo-json2-betajs-player.min.js"></script>
+		<script>ZiggeoApi.token = "f98b6bd1fb6223951a4f344be3ad5753";</script>
         <script src="js/main.js"></script>
 
 

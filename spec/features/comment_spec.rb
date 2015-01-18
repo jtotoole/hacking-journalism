@@ -11,7 +11,8 @@ describe "comment api", type: :feature do
       user: "miles",
       time: "12:30",
       created_at: "2015-01-18T03:50:39.597Z",
-      updated_at: "2015-01-18T03:50:39.597Z"
+      updated_at: "2015-01-18T03:50:39.597Z",
+      kind: "mykind"
     )
   end
 
@@ -34,7 +35,8 @@ describe "comment api", type: :feature do
         "position_y"=>"ypos",
         "created_at"=>"2015-01-18T03:50:39.597Z",
         "updated_at"=>"2015-01-18T03:50:39.597Z",
-        "user"=>"miles"
+        "user"=>"miles",
+        "kind"=>"mykind"
       }
     ])
   end

@@ -8,7 +8,8 @@ class CommentController < ApplicationController
         position_x: params[:position_x],
         position_y: params[:position_y],
         time:       params[:time],
-        user:       params[:user]
+        user:       params[:user],
+        kind:       params[:kind]
       )
     end
   end

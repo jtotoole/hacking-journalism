@@ -27,9 +27,6 @@ load_initial_comments();
 	}
 ];*/
 
-
-
-
 $(document).ready(function() {
 	videojs("myvideo").ready(function(){
 		var myPlayer = this;
@@ -49,7 +46,7 @@ $(document).ready(function() {
 				if(currentTime >= commentTime && currentTime <= commentTime  + COMMENT_TIME_ON_SCREEN_SECONDS && comments[i].visible != true) {
 					comments[i].visible = true;
 
-					var el = $("<div class='text-comment'>" + comments[i].user + ": " + comments[i].text + "</div>");
+					var el = $("<div class='text-comment text-left'>" + comments[i].user + ": " + comments[i].text + "</div>");
 					var video = $("#myvideo_html5_api");
 					
 					var video_position = video.position();

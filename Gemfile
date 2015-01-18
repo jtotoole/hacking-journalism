@@ -84,7 +84,6 @@ end
 
 group :test do
   gem 'vcr'
-  gem 'webmock'
   gem 'excon', '<0.39.0'
   # For testing the full stack
   gem 'capybara', '~> 2.2.1'

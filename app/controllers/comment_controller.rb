@@ -9,13 +9,19 @@ class CommentController < ApplicationController
         position_y: params[:position_y],
         time:       params[:time],
         user:       params[:user],
-        kind:       params[:kind]
+        kind:       params[:kind],
+        group:      params[:group] || nil
       )
     end
   end
 
   def get
-    render json: Comment.all, callback: params[:callback]
+    if no_param?(params[:group])
+      comments = Comment.all
+    else
+      comments = Comment.where(group: params[:group])
+    end
+    render json: comments, callback: params[:callback]
   end
 
   def delete
@@ -35,7 +41,7 @@ class CommentController < ApplicationController
   end
 
   def no_param?(param)
-    param.empty? || param.nil?
+    param.nil? || param.empty?
   end
 
   def success_redirect

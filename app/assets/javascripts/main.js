@@ -56,7 +56,17 @@ function createCommentMarker(time, data, duration, controlsElement){
 	});
 }
 
+function addEventListeners(){
+	var $inputOpts = $('.input-options-buttons');
+	$inputOpts.on('click', 'li', function(){
+		input_type = $(this).attr('data-type');
+		console.log('clicked: ', input_type);
+	});
+}
+
 $(document).ready(function() {
+	addEventListeners();
+
 	videojs("myvideo").ready(function(){
 		player.video = this;
 		var myPlayer = this;
@@ -115,17 +125,18 @@ $(document).ready(function() {
 
 		$("#myvideo_html5_api").click(function(e) {
 			console.log("Video clicked", e);
-			var text_box = $("#text_box");
+			var $inputWrapper = $("#input-options"),
+				text_box = $inputWrapper.find('#text_box');
 
 			play_time = myPlayer.currentTime();
 				
 
-			text_box.css({
+			$inputWrapper.css({
 				top: e.clientY + 'px',
 				left: e.clientX + 'px'
 			});
 
-			text_box.show();
+			$inputWrapper.show();
 			text_box.val("");
 			text_box.focus();
 

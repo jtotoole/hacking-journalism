@@ -115,11 +115,51 @@ body p {
     margin-right: auto;
 }
 
-#text_box {
+#input-options {
     position: absolute;
     left: 0px;
     top: 0px;
-    display: none
+    display: none    
+}
+.input-options-buttons {
+    list-style-type: none;
+    margin: 10px 0;
+    padding: 0;
+}
+.input-option-button {
+    display: inline-block;
+    padding: 5px 10px;
+    background-color: #eee;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -o-border-radius: 4px;
+    border-radius: 4px;
+    opacity: 0.5;
+    cursor: pointer;
+    -wekbit-transition: all 0.4s;
+    -moz-transition: all 0.4s;
+    -ms-transition: all 0.4s;
+    -o-transition: all 0.4s;
+    transition: all 0.4s;
+}
+.input-option-button[data-type="text"] {
+    background: steelblue;
+}
+.input-option-button[data-type="draw"] {
+    background-color: gold;
+}
+.input-option-button[data-type="camera"] {
+    background-color: tomato;
+}
+.input-option-button:hover {
+    opacity: 0.7;
+}
+.input-option-button-active,
+.input-option-button-active:hover {
+    opacity: 1;
+}
+#text_box {
 }
 .text-comment {
     position: absolute;

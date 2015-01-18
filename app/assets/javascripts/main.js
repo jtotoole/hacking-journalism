@@ -61,6 +61,9 @@ function addEventListeners(){
 	$inputOpts.on('click', 'li', function(){
 		input_type = $(this).attr('data-type');
 		console.log('clicked: ', input_type);
+		if(input_type=='draw'){
+			startDrawing(); //THIS IS IN THE drawing.js FILE IN FRONTEND
+		}
 	});
 }
 
